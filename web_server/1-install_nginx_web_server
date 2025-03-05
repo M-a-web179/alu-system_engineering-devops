@@ -1,45 +1,13 @@
 #!/usr/bin/env bash
-# Update package list and install Nginx
-sudo apt-get update -y
-sudo apt-get install nginx -y
+# Sets up nginx
 
-# Ensure Nginx listens on port 80
-sudo sed -i 's/# listen 80 default_server;/listen 80 default_server;/g' /etc/nginx/sites-available/default
-sudo sed -i 's/# listen 
+sudo apt-get update
+sudo apt-get install -y nginx
 
-\[::\]
+sudo service nginx start
 
-:80 default_server;/listen 
+echo "Holberton School" | sudo tee /var/www/html/index.html
 
-\[::\]
+sudo ufw allow 'Nginx HTTP'
 
-:80 default_server;/g' /etc/nginx/sites-available/default
-
-# Modify the default HTML file to include "Holberton School"
-echo 'Holberton School for the win!' | sudo tee /var/www/html/index.html
-
-# Restart Nginx using service
 sudo service nginx restart
-
-# Check Nginx status
-echo "Checking Nginx status..."
-sudo service nginx status
-
-# Verify Nginx is listening on port 80
-echo "Verifying Nginx configuration..."
-sudo cat /etc/nginx/sites-available/default
-
-# Check the content of the HTML file
-echo "Checking the content of the HTML file..."
-sudo cat /var/www/html/index.html
-
-# Test Nginx response
-echo "Testing Nginx response..."
-curl localhost
-
-# Troubleshoot if necessary
-if curl localhost | grep -q 'Holberton School'; then
-    echo "Nginx is serving the expected content."
-else
-    echo "Nginx is not serving the expected content. Please check the logs in /var/log/nginx."
-fi
